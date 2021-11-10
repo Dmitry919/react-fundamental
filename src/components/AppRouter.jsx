@@ -1,19 +1,34 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
-import Posts from "../pages/Posts";
-import {routes} from "../router";
+import {privateRoutes, publicRoutes} from "../router";
+import Login from "../pages/Login";
 
 const AppRouter = () => {
+    let isAuth = true
     return (
-        <Routes>
-            {routes.map(rout =>
-                <Route
-                    path={rout.path}
-                    component={rout.component}
-                    exact={rout.exact}
-                />)}
-            <Route path="*" element={<Posts/>}/>
-        </Routes>
+        isAuth
+            ?
+            <Routes>
+                {privateRoutes.map(rout =>
+                    <Route
+                        key={rout.path}
+                        path={rout.path}
+                        element={rout.element}
+                        index={rout.index}
+                    />)}
+                <Route path="*" element={<Login/>}/>
+            </Routes>
+            :
+            <Routes>
+                {publicRoutes.map(rout =>
+                    <Route
+                        key={rout.path}
+                        path={rout.path}
+                        element={rout.element}
+                        index={rout.index}
+                    />)}
+                <Route path="*" element={<Login/>}/>
+            </Routes>
     );
 };
 
